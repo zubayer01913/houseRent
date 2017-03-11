@@ -1,0 +1,178 @@
+﻿@model IEnumerable<HouseRent.Models.RentInformation>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+@{
+    List<IGrouping<DateTime?, HouseRent.Models.RentInformation>> MonthOfDetails = ViewBag.DetailsOfMonth as List<IGrouping<DateTime?, HouseRent.Models.RentInformation>>;
+    List<HouseRent.Models.RentInformation> listofReceiptNo = ViewBag.DetailsOfMonth as List<HouseRent.Models.RentInformation>;
+    
+}
+
+<div class="form-group">
+   
+
+
+</div>
+
+<h2>Details</h2>
+
+<div>
+    <h4>RentInformation</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+
+
+<div class="form-group">
+
+    @using (Html.BeginForm("DetailsOfMonthList", "RentInformations"))
+    {
+
+        <div class="row">
+            <div class="col-md-7">
+                <b>Total Amount Of Month: @ViewBag.TotalMonthOfAmmount</b>
+            </div>
+
+            <div class="col-md-2">
+                <div class="input-group date">
+                    <input type="month" id="DateOfMonth" name="DateOfMonth" />
+                </div>
+            </div>
+
+            <div class="col-md-1" style="padding-left:0">
+                <input type="submit" style="padding:4px 15px" class="btn btn-sm btn-primary pull-right" value="Filter" />
+            </div>
+        </div>
+    }
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>SN</th>
+        <th>Date</th>
+        <th>Receipt No</th>
+        <th>Amount</th>
+        <th>Flat Or Shop No</th>
+    </tr>
+    @if (listofReceiptNo != null)
+    {
+
+        var j = 1;
+        foreach (var item in listofReceiptNo.Select(i => i.Date).Distinct().ToList())
+        {
+            <tr>
+
+                <td>@(j++)</td>
+                <td> @item</td>
+
+                <td>
+                    @foreach (var finalItem in listofReceiptNo.Where(i => i.Date == item).ToList())
+                    {
+                        @finalItem.ReceiptNo<text>,</text>
+
+                    }
+                </td>
+                <td>
+                    @foreach (var finalItem in listofReceiptNo.Where(i => i.Date == item).ToList())
+                    {
+                        @finalItem.Amount<text>,</text>
+
+                    }
+                </td>
+                <td>
+                    @foreach (var finalItem in listofReceiptNo.Where(i => i.Date == item).ToList())
+                    {
+                        @finalItem.FlatOrShopNo<text>,</text>
+
+                    }
+                </td>
+
+            </tr>
+        }
+
+
+    }
+
+
+</table>
+
+    <table class="table">
+        @*<tr>
+                    <th>SN</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReceiptNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FlatOrShopNo)
+                    </th>
+                </tr>
+            @{
+                int i = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td> @i </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiptNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FlatOrShopNo)
+                        </td>
+                    </tr>
+                    i++;
+                }
+                }*@
+        @*@if(MonthOfDetails != null)
+            {
+            foreach (var item in MonthOfDetails)
+            {
+                <tr>
+                    <td>@item.Date;</td>
+                    <td>
+
+                           <ul>
+                               <li>@item.ReceiptNo</li>
+                           </ul>
+
+                    </td>
+                    <td>
+
+                            <ul>
+                                <li>@item.ReceiptNo</li>
+                            </ul>
+
+                    </td>
+                    <td>
+
+                            <ul>
+                                <li>@item.ReceiptNo</li>
+                            </ul>
+                    </td>
+                </tr>
+                }
+
+            }*@
+
+    </table>
+    <p>
+
+
+        @Html.ActionLink("Back to List", "Index")
+    </p>

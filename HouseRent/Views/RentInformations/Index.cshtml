@@ -1,0 +1,126 @@
+﻿@model HouseRent.Models.RentInformatioViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+<div class="form-group">
+
+    @using (Html.BeginForm("Index", "RentInformations", FormMethod.Get))
+    {
+
+        <div class="row">
+            <div class="col-md-7">
+                <b>Total Amount Of Month: @ViewBag.TotalMonthOfAmmount</b>
+            </div>
+
+            <div class="col-md-2">
+                <div class="input-group date">
+                    <input type="month" id="DateOfMonth" name="DateOfMonth" />
+                </div>
+            </div>
+
+            <div class="col-md-1" style="padding-left:0">
+                <input type="submit" style="padding:4px 15px" class="btn btn-sm btn-primary pull-right" value="Filter" />
+            </div>
+        </div>
+    }
+</div>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { htmlAttributes = new { @class = "btn btn-defult" } })
+
+</p>
+<table class="table">
+
+    <tr>
+            <th>
+                Flat Or Shop No
+            </th>
+            <th>
+                Type Name
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Rent
+            </th>
+            <th>
+                Bill
+            </th>
+            <th>
+                Due
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Receipt No
+            </th>
+            <th>
+                Comments
+            </th>
+            <th></th>
+        </tr>
+
+@*</table>*@
+    @foreach (var itemOfFoolr in Model.RentInformations.Select(x => x.FloorName).Distinct().ToList())
+    {
+      <tr>
+          <td colspan="11" style="color:#ff0000">@itemOfFoolr</td>
+      </tr>
+           
+
+                foreach (var item in Model.RentInformations.Where(x => x.FloorName == itemOfFoolr).ToList())
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FlatOrShopNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rent)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Bill)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Due)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiptNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comments)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+                    
+   
+    }
+  </table>
